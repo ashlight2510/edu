@@ -391,6 +391,22 @@ body {
     font-size: 14px;
 }
 
+/* 카카오 애드핏 컨테이너 */
+.kakao-ad-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 25px 0;
+    min-height: 250px;
+    padding: 20px;
+    background: var(--bg-color);
+    border-radius: 12px;
+}
+
+.kakao-ad-container .kakao_ad_area {
+    display: block !important;
+}
+
 /* 푸터 */
 .footer {
     background: var(--bg-color);
