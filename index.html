@@ -6,7 +6,7 @@
     <title>우리 집 사교육 지옥도 계산기 | 고3까지 지금처럼 쓰면 총 얼마?</title>
     <meta name="description" content="자녀의 사교육비를 계산하고, 그 돈으로 할 수 있는 대체 시나리오를 확인해보세요.">
     <link rel="stylesheet" href="style.css">
-    <script type="text/javascript" src="//t1.daumcdn.net/kas/static/ba.min.js" async></script>
+    <script type="text/javascript" src="https://t1.daumcdn.net/kas/static/ba.min.js" async></script>
 </head>
 <body>
     <div class="container">
@@ -142,6 +142,17 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // 카카오 애드핏 스크립트 로드 후 광고 영역 표시
+        window.addEventListener('load', function() {
+            if (window.kas && typeof window.kas === 'function') {
+                const adArea = document.querySelector('.kakao_ad_area');
+                if (adArea && document.getElementById('resultSection').style.display !== 'none') {
+                    adArea.style.display = 'block';
+                }
+            }
+        });
+    </script>
 </body>
 </html>
 
