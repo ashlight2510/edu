@@ -220,24 +220,6 @@ function showResults() {
     document.getElementById('inputSection').style.display = 'none';
     document.getElementById('resultSection').style.display = 'block';
     
-    // 카카오 애드핏 광고 로드 (결과 섹션이 표시된 후)
-    setTimeout(() => {
-        const adArea = document.querySelector('.kakao_ad_area');
-        if (adArea) {
-            // display:none 제거하여 광고 스크립트가 인식하도록 함
-            adArea.style.display = 'block';
-            
-            // 카카오 애드핏이 이미 로드된 경우 다시 초기화 시도
-            if (window.kas && typeof window.kas === 'function') {
-                try {
-                    window.kas();
-                } catch(e) {
-                    console.log('카카오 애드핏 초기화 중 오류:', e);
-                }
-            }
-        }
-    }, 300);
-    
     // 결과 섹션으로 스크롤
     document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
@@ -270,4 +252,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
