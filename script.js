@@ -43,8 +43,19 @@ function formatNumber(num) {
 function formatCurrency(num) {
     const lang = window.currentLang || 'ko';
     if (lang === 'en') {
-        // English format: use locale with KRW
-        return num.toLocaleString('en-US') + ' KRW';
+        // English format: use locale with KRW, but for large numbers use simplified format
+        if (num >= 100000000) {
+            const eok = Math.floor(num / 100000000);
+            const man = Math.floor((num % 100000000) / 10000);
+            if (man > 0) {
+                return `${eok}억 ${formatNumber(man)}만 KRW`;
+            }
+            return `${eok}억 KRW`;
+        } else if (num >= 10000) {
+            return `${formatNumber(Math.floor(num / 10000))}만 KRW`;
+        } else {
+            return `${formatNumber(num)} KRW`;
+        }
     }
     // Korean format: use 한글 currency units
     if (num >= 100000000) {
@@ -228,13 +239,18 @@ function showResults() {
         </div>
     `).join('');
 
-    // 섹션 전환
-    document.getElementById('inputSection').style.display = 'none';
-    document.getElementById('resultSection').style.display = 'block';
-    
-    // 결과 섹션으로 스크롤
-    document.getElementById('resultSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    // 섹션 전환 (이미 결과 섹션이 보이는 경우는 스크롤만)
+    const resultSection = document.getElementById('resultSection');
+    const inputSection = document.getElementById('inputSection');
+    if (inputSection.style.display !== 'none') {
+        inputSection.style.display = 'none';
+        resultSection.style.display = 'block';
+        resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
 }
+
+// Make showResults globally available for language switching
+window.showResults = showResults;
 
 // 다시 계산하기
 function resetForm() {

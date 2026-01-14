@@ -418,6 +418,11 @@
         if (options.forceUpdate && typeof window.updateChildrenInputs === "function") {
           window.updateChildrenInputs();
         }
+        // 결과 섹션이 보이는 경우 결과를 다시 계산
+        const resultSection = document.getElementById('resultSection');
+        if (resultSection && resultSection.style.display !== 'none' && typeof window.showResults === "function") {
+          window.showResults();
+        }
         if (options.updateUrl) {
           const url = new URL(window.location.href);
           url.searchParams.set("lang", nextLang);
