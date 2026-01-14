@@ -1,18 +1,19 @@
 // 자녀 입력 카드 생성
 function createChildInputCard(index) {
+    const t = window.t || ((key, vars = {}) => key);
     return `
         <div class="child-card">
-            <div class="child-card-header">👶 자녀 ${index + 1}</div>
+            <div class="child-card-header">${t("childLabel", { index: index + 1 })}</div>
             <div class="child-input-row">
                 <div class="form-group">
-                    <label>나이</label>
-                    <input type="number" class="input-number child-age" data-index="${index}" min="0" max="20" placeholder="예: 10">
-                    <span class="input-hint">세</span>
+                    <label>${t("labelChildAge")}</label>
+                    <input type="number" class="input-number child-age" data-index="${index}" min="0" max="20" placeholder="${t("placeholderAge")}">
+                    <span class="input-hint">${t("hintAge")}</span>
                 </div>
                 <div class="form-group">
-                    <label>월 사교육비</label>
-                    <input type="number" class="input-text child-cost" data-index="${index}" min="0" placeholder="예: 500000" step="10000">
-                    <span class="input-hint">원</span>
+                    <label>${t("labelChildCost")}</label>
+                    <input type="number" class="input-text child-cost" data-index="${index}" min="0" placeholder="${t("placeholderCost")}" step="10000">
+                    <span class="input-hint">${t("hintWon")}</span>
                 </div>
             </div>
         </div>
@@ -30,6 +31,9 @@ function updateChildrenInputs() {
     }
 }
 
+// Make updateChildrenInputs globally available
+window.updateChildrenInputs = updateChildrenInputs;
+
 // 숫자 포맷팅 (천 단위 콤마)
 function formatNumber(num) {
     return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
@@ -37,6 +41,12 @@ function formatNumber(num) {
 
 // 금액을 한글로 표현
 function formatCurrency(num) {
+    const lang = window.currentLang || 'ko';
+    if (lang === 'en') {
+        // English format: use locale with KRW
+        return num.toLocaleString('en-US') + ' KRW';
+    }
+    // Korean format: use 한글 currency units
     if (num >= 100000000) {
         const eok = Math.floor(num / 100000000);
         const man = Math.floor((num % 100000000) / 10000);
@@ -93,14 +103,15 @@ function calculateEducationCost(children, options) {
 
 // 대체 시나리오 계산
 function calculateScenarios(totalCost) {
+    const t = window.t || ((key, vars = {}) => key);
     const scenarios = [];
 
     // 해외여행 (4인 가족 기준 400만원)
     const trips = Math.floor(totalCost / 4000000);
     if (trips > 0) {
         scenarios.push({
-            label: '해외여행 (4인 가족)',
-            value: `${trips}번`,
+            label: t('scenarioTrip'),
+            value: `${trips}${t('unitTimes')}`,
             highlight: trips
         });
     }
@@ -109,8 +120,8 @@ function calculateScenarios(totalCost) {
     const cars = Math.floor(totalCost / 25000000);
     if (cars > 0) {
         scenarios.push({
-            label: '중형차 구매',
-            value: `${cars}대`,
+            label: t('scenarioCar'),
+            value: `${cars}${t('unitCars')}`,
             highlight: cars
         });
     }
@@ -119,7 +130,7 @@ function calculateScenarios(totalCost) {
     const jeonse = totalCost / 100000000;
     if (jeonse >= 0.1) {
         scenarios.push({
-            label: '전세자금 (1억 기준)',
+            label: t('scenarioJeonse'),
             value: `${(jeonse * 100).toFixed(1)}%`,
             highlight: jeonse.toFixed(1)
         });
@@ -128,7 +139,7 @@ function calculateScenarios(totalCost) {
     // S&P500 ETF (연평균 7% 복리, 18년)
     const sp500_18yr = totalCost * Math.pow(1.07, 18);
     scenarios.push({
-        label: 'S&P500 ETF 투자 (18년, 연 7%)',
+        label: t('scenarioSP500'),
         value: formatCurrency(Math.round(sp500_18yr)),
         highlight: formatCurrency(Math.round(sp500_18yr))
     });
@@ -137,8 +148,8 @@ function calculateScenarios(totalCost) {
     const semesters = Math.floor(totalCost / 4000000);
     if (semesters >= 1) {
         scenarios.push({
-            label: '대학 등록금 (연 800만원 기준)',
-            value: `${semesters}학기`,
+            label: t('scenarioTuition'),
+            value: `${semesters}${t('unitSemesters')}`,
             highlight: semesters
         });
     }
@@ -148,8 +159,8 @@ function calculateScenarios(totalCost) {
     if (months >= 12) {
         const years = Math.floor(months / 12);
         scenarios.push({
-            label: '서울 아파트 관리비 (월 30만원)',
-            value: `${years}년 ${months % 12}개월`,
+            label: t('scenarioMaintenance'),
+            value: `${years}${t('unitYears')} ${months % 12}${t('unitMonths')}`,
             highlight: years
         });
     }
@@ -178,13 +189,14 @@ function showResults() {
     }
 
     // 유효성 검사
+    const t = window.t || ((key, vars = {}) => key);
     if (children.length === 0) {
-        alert('자녀 정보를 올바르게 입력해주세요.');
+        alert(t('alertNoChildren'));
         return;
     }
 
     if (startAge >= endAge) {
-        alert('시작 나이는 종료 나이보다 작아야 합니다.');
+        alert(t('alertAgeInvalid'));
         return;
     }
 

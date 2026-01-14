@@ -48,24 +48,67 @@
         text-align: center;
 }
   </style>
+  <style>
+    .lang-switch {
+      position: fixed;
+      top: 16px;
+      right: 16px;
+      display: inline-flex;
+      gap: 0;
+      padding: 3px;
+      border-radius: 999px;
+      background: rgba(15, 15, 15, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+    }
+    .lang-switch button {
+      border: none;
+      background: transparent;
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 7px 14px;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      min-width: 44px;
+      text-align: center;
+      letter-spacing: 0.02em;
+    }
+    .lang-switch button.active {
+      background: #1a1a1a;
+      color: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+    }
+    .lang-switch button:not(.active):hover {
+      background: rgba(255, 255, 255, 0.1);
+      color: rgba(255, 255, 255, 0.9);
+    }
+  </style>
 </head>
-<body><div class="container">
+<body>
+  <div class="lang-switch" role="tablist" aria-label="Language switcher">
+    <button type="button" data-lang="ko" class="active">KR</button>
+    <button type="button" data-lang="en">EN</button>
+  </div>
+  <div class="container">
         <!-- 헤더 -->
         <header class="header">
-            <h1 class="title">🎓 우리 집 사교육 지옥도 계산기</h1>
-            <p class="subtitle">고3까지 지금처럼 쓰면 총 얼마?</p>
-            <p class="description">팩트 기반 인생 시뮬레이션. 부담 없이 계산해보세요.</p>
+            <h1 class="title" data-i18n="title">🎓 우리 집 사교육 지옥도 계산기</h1>
+            <p class="subtitle" data-i18n="subtitle">고3까지 지금처럼 쓰면 총 얼마?</p>
+            <p class="description" data-i18n="description">팩트 기반 인생 시뮬레이션. 부담 없이 계산해보세요.</p>
         </header>
 
         <!-- 입력 폼 섹션 -->
         <section class="input-section" id="inputSection">
             <div class="form-group">
-                <label for="childrenCount">자녀 수</label>
+                <label for="childrenCount" data-i18n="labelChildrenCount">자녀 수</label>
                 <select id="childrenCount" class="input-select">
-                    <option value="1">1명</option>
-                    <option value="2" selected>2명</option>
-                    <option value="3">3명</option>
-                    <option value="4">4명</option>
+                    <option value="1" data-i18n="optionChild1">1명</option>
+                    <option value="2" selected data-i18n="optionChild2">2명</option>
+                    <option value="3" data-i18n="optionChild3">3명</option>
+                    <option value="4" data-i18n="optionChild4">4명</option>
                 </select>
             </div>
 
@@ -74,35 +117,35 @@
             </div>
 
             <div class="form-group">
-                <label for="startAge">사교육 시작 나이</label>
+                <label for="startAge" data-i18n="labelStartAge">사교육 시작 나이</label>
                 <input type="number" id="startAge" class="input-number" value="6" min="3" max="15">
-                <span class="input-hint">세</span>
+                <span class="input-hint" data-i18n="hintAge">세</span>
             </div>
 
             <div class="form-group">
-                <label for="endAge">사교육 종료 나이</label>
+                <label for="endAge" data-i18n="labelEndAge">사교육 종료 나이</label>
                 <input type="number" id="endAge" class="input-number" value="18" min="15" max="20">
-                <span class="input-hint">세 (고3 기준)</span>
+                <span class="input-hint" data-i18n="hintAgeEnd">세 (고3 기준)</span>
             </div>
 
             <div class="options-section">
-                <h3>고급 계산 모드</h3>
+                <h3 data-i18n="advancedModeTitle">고급 계산 모드</h3>
                 <div class="toggle-group">
                     <label class="toggle-label">
                         <input type="checkbox" id="includeVacationCost">
-                        <span>방학 특강 비용 포함 (연 2회, 월비용의 50%)</span>
+                        <span data-i18n="optionVacation">방학 특강 비용 포함 (연 2회, 월비용의 50%)</span>
                     </label>
                 </div>
                 <div class="toggle-group">
                     <label class="toggle-label">
                         <input type="checkbox" id="includeInflation">
-                        <span>물가 상승률 반영 (연 3%)</span>
+                        <span data-i18n="optionInflation">물가 상승률 반영 (연 3%)</span>
                     </label>
                 </div>
                 <div class="toggle-group">
                     <label class="toggle-label">
                         <input type="checkbox" id="siblingDiscount">
-                        <span>형제 시너지 할인 (10% 할인, 2명 이상)</span>
+                        <span data-i18n="optionSiblingDiscount">형제 시너지 할인 (10% 할인, 2명 이상)</span>
                     </label>
                 </div>
             </div>
@@ -112,20 +155,20 @@
                 <div class="kakao-ad-container">
                     </div>
             </div>
-            <button id="calculateBtn" class="btn-primary">💰 계산하기</button>
+            <button id="calculateBtn" class="btn-primary" data-i18n="btnCalculate">💰 계산하기</button>
         </section>
 
         <!-- 결과 섹션 -->
         <section class="result-section" id="resultSection" style="display: none;">
             <div class="result-main">
-                <h2>고3까지 예상 총 사교육비</h2>
+                <h2 data-i18n="resultTitle">고3까지 예상 총 사교육비</h2>
                 <div class="total-cost" id="totalCost">0원</div>
-                <p class="result-description">현재 상황 기준으로 계산된 예상 비용입니다.</p>
+                <p class="result-description" data-i18n="resultDescription">현재 상황 기준으로 계산된 예상 비용입니다.</p>
             </div>
 
             <!-- 대체 시나리오 -->
             <div class="scenario-box">
-                <h3>💡 이 비용으로 할 수 있는 것들</h3>
+                <h3 data-i18n="scenarioTitle">💡 이 비용으로 할 수 있는 것들</h3>
                 <div class="scenario-list" id="scenarioList">
                     <!-- 동적으로 생성 -->
                 </div>
@@ -133,51 +176,274 @@
 
             <!-- 공부 스타일 체크리스트 -->
             <div class="checklist-box">
-                <h3>📝 우리 아이 공부 스타일 체크리스트</h3>
+                <h3 data-i18n="checklistTitle">📝 우리 아이 공부 스타일 체크리스트</h3>
                 <div class="checklist-content">
                     <div class="checklist-item">
-                        <strong>자기주도 vs 외부주도</strong>
-                        <p>혼자서도 학습 계획을 세우고 진행할 수 있나요? 아니면 학원/과외 시간이 아니면 공부를 시작하기 어려운가요?</p>
+                        <strong data-i18n="checklist1_title">자기주도 vs 외부주도</strong>
+                        <p data-i18n="checklist1_desc">혼자서도 학습 계획을 세우고 진행할 수 있나요? 아니면 학원/과외 시간이 아니면 공부를 시작하기 어려운가요?</p>
                     </div>
                     <div class="checklist-item">
-                        <strong>학습 스타일</strong>
-                        <p>영상 강의가 효과적인가요? 교과서나 문제집 같은 텍스트 중심인가요? 아니면 설명을 듣고 필기하는 게 나을까요?</p>
+                        <strong data-i18n="checklist2_title">학습 스타일</strong>
+                        <p data-i18n="checklist2_desc">영상 강의가 효과적인가요? 교과서나 문제집 같은 텍스트 중심인가요? 아니면 설명을 듣고 필기하는 게 나을까요?</p>
                     </div>
                     <div class="checklist-item">
-                        <strong>집중 유지 시간</strong>
-                        <p>한 번에 몇 분 동안 집중할 수 있나요? (초등: 20-30분, 중고등: 45-60분 기준)</p>
+                        <strong data-i18n="checklist3_title">집중 유지 시간</strong>
+                        <p data-i18n="checklist3_desc">한 번에 몇 분 동안 집중할 수 있나요? (초등: 20-30분, 중고등: 45-60분 기준)</p>
                     </div>
                     <div class="checklist-item">
-                        <strong>기억 스타일</strong>
-                        <p>반복 학습이 효과적인가요? 문제를 많이 푸는 게 나을까요? 아니면 개념 설명을 듣는 게 이해가 잘 되나요?</p>
+                        <strong data-i18n="checklist4_title">기억 스타일</strong>
+                        <p data-i18n="checklist4_desc">반복 학습이 효과적인가요? 문제를 많이 푸는 게 나을까요? 아니면 개념 설명을 듣는 게 이해가 잘 되나요?</p>
                     </div>
                 </div>
-                <p class="checklist-note">💬 이 체크리스트는 참고용입니다. 전문 컨설팅이 아닙니다.</p>
+                <p class="checklist-note" data-i18n="checklistNote">💬 이 체크리스트는 참고용입니다. 전문 컨설팅이 아닙니다.</p>
             </div>
 
             <!-- 라이트 조언 -->
             <div class="advice-box">
-                <h3>💭 라이트 조언</h3>
+                <h3 data-i18n="adviceTitle">💭 라이트 조언</h3>
                 <ul class="advice-list">
-                    <li>사교육이 중요한 게 아니라 <strong>'총 시간 투자량 × 질'</strong>이 핵심입니다.</li>
-                    <li>비용 대비 효율적인 과목부터 점검해보세요. 모든 과목에 동일한 비용을 투자할 필요는 없습니다.</li>
-                    <li>자녀의 학습 스타일을 이해하면 더 효과적인 방법을 찾을 수 있습니다.</li>
-                    <li>무료/저비용 대안도 많습니다. 공교육 자료, EBS, 유튜브 강의 등도 활용해보세요.</li>
+                    <li data-i18n-html="advice1">사교육이 중요한 게 아니라 <strong>'총 시간 투자량 × 질'</strong>이 핵심입니다.</li>
+                    <li data-i18n="advice2">비용 대비 효율적인 과목부터 점검해보세요. 모든 과목에 동일한 비용을 투자할 필요는 없습니다.</li>
+                    <li data-i18n="advice3">자녀의 학습 스타일을 이해하면 더 효과적인 방법을 찾을 수 있습니다.</li>
+                    <li data-i18n="advice4">무료/저비용 대안도 많습니다. 공교육 자료, EBS, 유튜브 강의 등도 활용해보세요.</li>
                 </ul>
             </div>
 
 
-            <button id="backBtn" class="btn-secondary">다시 계산하기</button>
+            <button id="backBtn" class="btn-secondary" data-i18n="btnReset">다시 계산하기</button>
         </section>
 
         <!-- 푸터 -->
         <footer class="footer">
-            <p>본 계산기는 예상치이며, 실제 비용과는 다를 수 있습니다.</p>
-            <p>전문 재무/교육 컨설팅이 아닙니다. 참고용으로만 사용해주세요.</p>
+            <p data-i18n="footer1">본 계산기는 예상치이며, 실제 비용과는 다를 수 있습니다.</p>
+            <p data-i18n="footer2">전문 재무/교육 컨설팅이 아닙니다. 참고용으로만 사용해주세요.</p>
         </footer>
     </div>
 
     <script src="script.js"></script>
+    <script>
+      // =========================
+      // i18n
+      // =========================
+      const translations = {
+        ko: {
+          metaTitle: "우리 집 사교육 지옥도 계산기 | 고3까지 지금처럼 쓰면 총 얼마?",
+          metaDescription: "자녀의 사교육비를 계산하고, 그 돈으로 할 수 있는 대체 시나리오를 확인해보세요.",
+          title: "🎓 우리 집 사교육 지옥도 계산기",
+          subtitle: "고3까지 지금처럼 쓰면 총 얼마?",
+          description: "팩트 기반 인생 시뮬레이션. 부담 없이 계산해보세요.",
+          labelChildrenCount: "자녀 수",
+          optionChild1: "1명",
+          optionChild2: "2명",
+          optionChild3: "3명",
+          optionChild4: "4명",
+          labelStartAge: "사교육 시작 나이",
+          labelEndAge: "사교육 종료 나이",
+          hintAge: "세",
+          hintAgeEnd: "세 (고3 기준)",
+          advancedModeTitle: "고급 계산 모드",
+          optionVacation: "방학 특강 비용 포함 (연 2회, 월비용의 50%)",
+          optionInflation: "물가 상승률 반영 (연 3%)",
+          optionSiblingDiscount: "형제 시너지 할인 (10% 할인, 2명 이상)",
+          btnCalculate: "💰 계산하기",
+          resultTitle: "고3까지 예상 총 사교육비",
+          resultDescription: "현재 상황 기준으로 계산된 예상 비용입니다.",
+          scenarioTitle: "💡 이 비용으로 할 수 있는 것들",
+          checklistTitle: "📝 우리 아이 공부 스타일 체크리스트",
+          checklistNote: "💬 이 체크리스트는 참고용입니다. 전문 컨설팅이 아닙니다.",
+          adviceTitle: "💭 라이트 조언",
+          advice1: "사교육이 중요한 게 아니라 <strong>'총 시간 투자량 × 질'</strong>이 핵심입니다.",
+          advice2: "비용 대비 효율적인 과목부터 점검해보세요. 모든 과목에 동일한 비용을 투자할 필요는 없습니다.",
+          advice3: "자녀의 학습 스타일을 이해하면 더 효과적인 방법을 찾을 수 있습니다.",
+          advice4: "무료/저비용 대안도 많습니다. 공교육 자료, EBS, 유튜브 강의 등도 활용해보세요.",
+          btnReset: "다시 계산하기",
+          footer1: "본 계산기는 예상치이며, 실제 비용과는 다를 수 있습니다.",
+          footer2: "전문 재무/교육 컨설팅이 아닙니다. 참고용으로만 사용해주세요.",
+          alertNoChildren: "자녀 정보를 올바르게 입력해주세요.",
+          alertAgeInvalid: "시작 나이는 종료 나이보다 작아야 합니다.",
+          childLabel: "👶 자녀 {index}",
+          labelChildAge: "나이",
+          labelChildCost: "월 사교육비",
+          hintWon: "원",
+          placeholderAge: "예: 10",
+          placeholderCost: "예: 500000",
+          scenarioTrip: "해외여행 (4인 가족)",
+          scenarioCar: "중형차 구매",
+          scenarioJeonse: "전세자금 (1억 기준)",
+          scenarioSP500: "S&P500 ETF 투자 (18년, 연 7%)",
+          scenarioTuition: "대학 등록금 (연 800만원 기준)",
+          scenarioMaintenance: "서울 아파트 관리비 (월 30만원)",
+          unitTimes: "번",
+          unitCars: "대",
+          unitSemesters: "학기",
+          unitYears: "년",
+          unitMonths: "개월",
+          checklist1_title: "자기주도 vs 외부주도",
+          checklist1_desc: "혼자서도 학습 계획을 세우고 진행할 수 있나요? 아니면 학원/과외 시간이 아니면 공부를 시작하기 어려운가요?",
+          checklist2_title: "학습 스타일",
+          checklist2_desc: "영상 강의가 효과적인가요? 교과서나 문제집 같은 텍스트 중심인가요? 아니면 설명을 듣고 필기하는 게 나을까요?",
+          checklist3_title: "집중 유지 시간",
+          checklist3_desc: "한 번에 몇 분 동안 집중할 수 있나요? (초등: 20-30분, 중고등: 45-60분 기준)",
+          checklist4_title: "기억 스타일",
+          checklist4_desc: "반복 학습이 효과적인가요? 문제를 많이 푸는 게 나을까요? 아니면 개념 설명을 듣는 게 이해가 잘 되나요?",
+        },
+        en: {
+          metaTitle: "Private Education Cost Calculator | How Much Will It Cost Until High School?",
+          metaDescription: "Calculate your child's private education costs and see alternative scenarios you could do with that money.",
+          title: "🎓 Private Education Cost Calculator",
+          subtitle: "How much will it cost until high school if we continue like this?",
+          description: "Fact-based life simulation. Calculate without burden.",
+          labelChildrenCount: "Number of Children",
+          optionChild1: "1 child",
+          optionChild2: "2 children",
+          optionChild3: "3 children",
+          optionChild4: "4 children",
+          labelStartAge: "Private Education Start Age",
+          labelEndAge: "Private Education End Age",
+          hintAge: "years old",
+          hintAgeEnd: "years old (high school 3rd grade)",
+          advancedModeTitle: "Advanced Calculation Mode",
+          optionVacation: "Include vacation special classes (2x per year, 50% of monthly cost)",
+          optionInflation: "Apply inflation rate (3% per year)",
+          optionSiblingDiscount: "Sibling synergy discount (10% discount, 2 or more)",
+          btnCalculate: "💰 Calculate",
+          resultTitle: "Estimated Total Private Education Cost Until High School",
+          resultDescription: "Estimated cost calculated based on current situation.",
+          scenarioTitle: "💡 What You Could Do With This Cost",
+          checklistTitle: "📝 My Child's Learning Style Checklist",
+          checklistNote: "💬 This checklist is for reference only. It is not professional consulting.",
+          adviceTitle: "💭 Light Advice",
+          advice1: "What matters is not private education, but <strong>'Total Time Investment × Quality'</strong>.",
+          advice2: "Check cost-effective subjects first. You don't need to invest the same amount in all subjects.",
+          advice3: "Understanding your child's learning style will help you find more effective methods.",
+          advice4: "There are many free/low-cost alternatives. Utilize public education materials, EBS, YouTube lectures, etc.",
+          btnReset: "Calculate Again",
+          footer1: "This calculator is an estimate and may differ from actual costs.",
+          footer2: "This is not professional financial/educational consulting. Use for reference only.",
+          alertNoChildren: "Please enter child information correctly.",
+          alertAgeInvalid: "Start age must be less than end age.",
+          childLabel: "👶 Child {index}",
+          labelChildAge: "Age",
+          labelChildCost: "Monthly Private Education Cost",
+          hintWon: "KRW",
+          placeholderAge: "e.g. 10",
+          placeholderCost: "e.g. 500000",
+          scenarioTrip: "Overseas Trip (4-person family)",
+          scenarioCar: "Mid-size Car Purchase",
+          scenarioJeonse: "Jeonse Deposit (100 million KRW basis)",
+          scenarioSP500: "S&P500 ETF Investment (18 years, 7% per year)",
+          scenarioTuition: "University Tuition (8 million KRW per year basis)",
+          scenarioMaintenance: "Seoul Apartment Maintenance Fee (300,000 KRW per month)",
+          unitTimes: "times",
+          unitCars: "cars",
+          unitSemesters: "semesters",
+          unitYears: "years",
+          unitMonths: "months",
+          checklist1_title: "Self-directed vs External-directed",
+          checklist1_desc: "Can your child make and follow a study plan alone? Or is it difficult to start studying unless it's academy/tutoring time?",
+          checklist2_title: "Learning Style",
+          checklist2_desc: "Are video lectures effective? Is it text-centered like textbooks or workbooks? Or is it better to listen to explanations and take notes?",
+          checklist3_title: "Focus Duration",
+          checklist3_desc: "How many minutes can your child focus at once? (Elementary: 20-30 min, Middle/High: 45-60 min standard)",
+          checklist4_title: "Memory Style",
+          checklist4_desc: "Is repetitive learning effective? Is it better to solve many problems? Or does listening to concept explanations help understanding?",
+        },
+      };
+
+      const defaultLang = "ko";
+      const supportedLangs = ["ko", "en"];
+      let currentLang = defaultLang;
+
+      function t(key, vars = {}) {
+        const langTable = translations[currentLang] || translations.ko;
+        let template = langTable?.[key] ?? translations.ko?.[key] ?? key;
+        if (typeof template !== "string") return template;
+        Object.keys(vars).forEach((k) => {
+          template = template.replace(new RegExp(`\\{${k}\\}`, "g"), vars[k]);
+        });
+        return template;
+      }
+
+      function applyTranslations() {
+        document.title = t("metaTitle");
+        const descMeta = document.querySelector('meta[name="description"]');
+        if (descMeta) descMeta.setAttribute("content", t("metaDescription"));
+        document.documentElement.lang = currentLang;
+        document.querySelectorAll("[data-i18n]").forEach((el) => {
+          el.textContent = t(el.dataset.i18n);
+        });
+        document.querySelectorAll("[data-i18n-html]").forEach((el) => {
+          el.innerHTML = t(el.dataset.i18nHtml);
+        });
+        document.querySelectorAll("[data-i18n-placeholder]").forEach((el) => {
+          el.placeholder = t(el.dataset.i18nPlaceholder);
+        });
+        // Update select options
+        const childrenCountSelect = document.getElementById('childrenCount');
+        if (childrenCountSelect) {
+          Array.from(childrenCountSelect.options).forEach(option => {
+            if (option.dataset.i18n) {
+              option.textContent = t(option.dataset.i18n);
+            }
+          });
+        }
+      }
+
+      function detectLang() {
+        const params = new URLSearchParams(window.location.search);
+        const paramLang = params.get("lang");
+        if (supportedLangs.includes(paramLang)) return paramLang;
+        const stored = localStorage.getItem("preferredLang");
+        if (supportedLangs.includes(stored)) return stored;
+        const intlLocale =
+          typeof Intl === "object" && typeof Intl.DateTimeFormat === "function"
+            ? Intl.DateTimeFormat().resolvedOptions().locale
+            : "";
+        const sources = [
+          ...(navigator.languages || []),
+          navigator.language,
+          navigator.userLanguage,
+          intlLocale,
+        ]
+          .filter(Boolean)
+          .map((locale) => locale.toLowerCase());
+        const hasKorean = sources.some((locale) => locale.startsWith("ko"));
+        return hasKorean ? "ko" : "en";
+      }
+
+      function setLang(lang, options = {}) {
+        const nextLang = supportedLangs.includes(lang) ? lang : defaultLang;
+        currentLang = nextLang;
+        window.currentLang = currentLang;
+        document.documentElement.lang = nextLang;
+        localStorage.setItem("preferredLang", nextLang);
+        document.querySelectorAll(".lang-switch button").forEach((button) => {
+          button.classList.toggle("active", button.dataset.lang === nextLang);
+        });
+        applyTranslations();
+        if (options.forceUpdate && typeof window.updateChildrenInputs === "function") {
+          window.updateChildrenInputs();
+        }
+        if (options.updateUrl) {
+          const url = new URL(window.location.href);
+          url.searchParams.set("lang", nextLang);
+          window.history.replaceState({}, "", url);
+        }
+      }
+
+      document.querySelectorAll(".lang-switch button").forEach((button) => {
+        button.addEventListener("click", () => {
+          setLang(button.dataset.lang, { updateUrl: true, forceUpdate: true });
+        });
+      });
+
+      setLang(detectLang(), { updateUrl: false, forceUpdate: false });
+
+      // Make t() function and currentLang globally available for script.js
+      window.t = t;
+      window.currentLang = currentLang;
+      window.setLang = setLang;
+    </script>
     <script>
       (function () {
         'use strict';
