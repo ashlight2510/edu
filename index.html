@@ -424,6 +424,12 @@
         const resultSection = document.getElementById('resultSection');
         if (resultSection && resultSection.style.display !== 'none' && typeof window.showResults === "function") {
           window.showResults();
+        } else {
+          // 결과 섹션이 보이지 않는 경우 초기값 업데이트
+          const totalCostEl = document.getElementById('totalCost');
+          if (totalCostEl && (!totalCostEl.textContent || totalCostEl.textContent === '0원' || totalCostEl.textContent === '0 KRW')) {
+            totalCostEl.textContent = t('initialCost');
+          }
         }
         if (options.updateUrl) {
           const url = new URL(window.location.href);
