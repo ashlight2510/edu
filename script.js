@@ -264,6 +264,13 @@ document.addEventListener('DOMContentLoaded', function() {
     // 초기 자녀 입력란 생성
     updateChildrenInputs();
 
+    // 초기 총 비용 표시
+    const totalCostEl = document.getElementById('totalCost');
+    if (totalCostEl) {
+        const t = window.t || ((key) => key);
+        totalCostEl.textContent = t('initialCost');
+    }
+
     // 자녀 수 변경 시
     document.getElementById('childrenCount').addEventListener('change', updateChildrenInputs);
 
