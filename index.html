@@ -240,6 +240,7 @@
           btnReset: "다시 계산하기",
           footer1: "본 계산기는 예상치이며, 실제 비용과는 다를 수 있습니다.",
           footer2: "전문 재무/교육 컨설팅이 아닙니다. 참고용으로만 사용해주세요.",
+          moreTestsBtn: "더 많은 테스트 해보기",
           alertNoChildren: "자녀 정보를 올바르게 입력해주세요.",
           alertAgeInvalid: "시작 나이는 종료 나이보다 작아야 합니다.",
           childLabel: "👶 자녀 {index}",
@@ -302,6 +303,7 @@
           btnReset: "Calculate Again",
           footer1: "This calculator is an estimate and may differ from actual costs.",
           footer2: "This is not professional financial/educational consulting. Use for reference only.",
+          moreTestsBtn: "Explore more tests",
           alertNoChildren: "Please enter child information correctly.",
           alertAgeInvalid: "Start age must be less than end age.",
           childLabel: "👶 Child {index}",
@@ -436,29 +438,70 @@
       (function () {
         'use strict';
         const targetUrl = 'https://funnyfunny.cloud/';
+        
+        function updateMoreTestsButton() {
+          const btn = document.getElementById('more-tests-btn');
+          if (!btn) return;
+          const t = window.t || ((key, vars = {}) => key);
+          btn.textContent = t('moreTestsBtn');
+        }
+        
         function addMoreTestsButton() {
-          if (document.getElementById('more-tests-btn')) return;
+          if (document.getElementById('more-tests-btn')) {
+            updateMoreTestsButton();
+            return;
+          }
+          
           const moreBtn = document.createElement('button');
           moreBtn.id = 'more-tests-btn';
           moreBtn.type = 'button';
-          moreBtn.dataset.url = targetUrl;
-          moreBtn.textContent = '더 많은 테스트 해보기';
-          moreBtn.className = 'w-full py-4 bg-white border border-purple-100 text-purple-700 font-semibold rounded-xl hover:bg-purple-50 hover:border-purple-200 transition-all duration-200 mt-3';
+          moreBtn.className = 'more-tests-btn';
+          
+          const t = window.t || ((key, vars = {}) => key);
+          moreBtn.textContent = t('moreTestsBtn');
+          
           moreBtn.addEventListener('click', function () {
             window.open(targetUrl, '_blank', 'noopener');
           });
-          const shareButton = document.querySelector("button#share-btn, button#shareBtn, button[id*=\"share\"]");
-          if (shareButton) {
-            shareButton.insertAdjacentElement('afterend', moreBtn);
-          } else if (document.body) {
-            document.body.appendChild(moreBtn);
+          
+          // footer 위에 추가
+          const footer = document.querySelector('.footer');
+          const container = document.querySelector('.container');
+          
+          if (footer && footer.parentNode) {
+            footer.parentNode.insertBefore(moreBtn, footer);
+          } else if (container) {
+            container.appendChild(moreBtn);
           }
         }
-        if (document.readyState === 'loading') {
-          document.addEventListener('DOMContentLoaded', addMoreTestsButton);
-        } else {
-          addMoreTestsButton();
+        
+        function init() {
+          function tryAddButton() {
+            const footer = document.querySelector('.footer');
+            if (footer || document.querySelector('.container')) {
+              addMoreTestsButton();
+            } else {
+              setTimeout(tryAddButton, 50);
+            }
+          }
+          
+          if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', tryAddButton);
+          } else {
+            tryAddButton();
+          }
+          
+          // 언어 변경 시 버튼 텍스트 업데이트
+          const originalSetLang = window.setLang;
+          if (originalSetLang) {
+            window.setLang = function(lang, options) {
+              originalSetLang(lang, options);
+              setTimeout(updateMoreTestsButton, 100);
+            };
+          }
         }
+        
+        init();
       })();
     </script>
 </body>

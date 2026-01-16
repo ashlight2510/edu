@@ -434,6 +434,54 @@ body {
     font-weight: 600;
 }
 
+/* 더 많은 테스트 해보기 버튼 */
+.more-tests-btn {
+    width: 100%;
+    max-width: 800px;
+    margin: 40px auto 0;
+    padding: 20px 40px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    border: none;
+    border-radius: 16px;
+    color: white;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+    transition: all 0.3s ease;
+    display: block;
+    text-align: center;
+    letter-spacing: 0.5px;
+    position: relative;
+    overflow: hidden;
+}
+
+.more-tests-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s ease;
+}
+
+.more-tests-btn:hover::before {
+    left: 100%;
+}
+
+.more-tests-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(102, 126, 234, 0.5);
+    background: linear-gradient(135deg, #5568d3 0%, #653a8f 100%);
+}
+
+.more-tests-btn:active {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(102, 126, 234, 0.4);
+}
+
 /* 푸터 */
 .footer {
     background: var(--bg-color);
@@ -488,6 +536,12 @@ body {
 
     .scenario-item-highlight {
         align-self: flex-end;
+    }
+    
+    .more-tests-btn {
+        padding: 16px 30px;
+        font-size: 16px;
+        margin: 30px auto 0;
     }
 }
 
